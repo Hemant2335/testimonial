@@ -33,7 +33,7 @@ const Dashboard = () => {
           <li
             onClick={handleCompState}
             id="About-Comp"
-            className="hover:bg-[#121212] flex items-center gap-2 cursor-pointer px-3 py-2 rounded-t-md "
+            className="hover:bg-[#1a1a1a] flex items-center gap-2 cursor-pointer px-3 py-2 rounded-t-md "
           >
             <FiUser className="inline-block" />
             About

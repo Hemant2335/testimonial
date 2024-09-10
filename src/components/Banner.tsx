@@ -5,12 +5,12 @@ const Banner = () => {
     <div className="bg-[#F9F6EE] overflow-y-hidden text-black w-full rounded-xl h-[80vh] py-[4vh]">
       <div className="w-full text-center shadow-xl py-[4vh]">
         <h2 className="font-medium text-[7vh]">
-          Say goodbye to Old Testimonials
+          Say goodbye to Long Queues
           <br />
           and wasted time
         </h2>
         <p className="mt-[1vh]">
-          the ultimate solution for business who value their Testimonials.
+          the ultimate solution for Individuals who value their Time.
         </p>
         <button className="mt-[5vh] bg-[#1a1a1a] text-white p-3 rounded-md">
           Get Started
