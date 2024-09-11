@@ -4,16 +4,15 @@ import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [Name, setName] = useState<string | null>(null);
-  const [Username, setUsername] = useState<string | null>(null);
   const [Email, setEmail] = useState<string | null>(null);
   const [Password, setPassword] = useState<string | null>(null);
-  const [Terms, setTerms] = useState<boolean>(false);
   const [Warning, setWarning] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleSignup = async () => {
-    if (!Name || !Username || !Email || !Password || !Terms) {
-      setWarning("Please fill all the fields and accept the terms");
+    if (!Name || !selectedValue || !Email || !Password ) {
+
+        setWarning("Please fill all the fields and accept the terms");
       return;
     }
     try {
@@ -26,7 +25,7 @@ const Signup = () => {
           },
           body: JSON.stringify({
             name: Name,
-            username: Username,
+            type: selectedValue,
             email: Email,
             password: Password,
           }),
@@ -73,7 +72,7 @@ const Signup = () => {
                 <input
                   type="text"
                   placeholder="eg. John Doe"
-                  className="bg-[#F3F3F3] w-full font-medium text-sm  focus:outline-none p-[1.6vh] rounded-md"
+                  className="bg-[#F3F3F3] text-black w-full font-medium text-sm  focus:outline-none p-[1.6vh] rounded-md"
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
@@ -83,14 +82,14 @@ const Signup = () => {
                 <label htmlFor="profession" className="font-medium ">
                   Type
                 </label>
-                <div className="dropdown ">
+                <div className="dropdown">
                   <input
                     placeholder={selectedValue}
                     type="text"
                     value={selectedValue}
                     onClick={() => setIsOpen(!isOpen)} // Toggle the dropdown
                     readOnly
-                    className="bg-[#F3F3F3] cursor-pointer w-full font-medium text-black text-sm  focus:outline-none p-[1.6vh] rounded-md"
+                    className="bg-[#F3F3F3]  cursor-pointer w-full font-medium text-black text-sm  focus:outline-none p-[1.6vh] rounded-md"
                   />
                   {isOpen && (
                     <ul
@@ -113,7 +112,7 @@ const Signup = () => {
               <input
                 type="text"
                 placeholder="eg. test@gmail.com"
-                className="bg-[#F3F3F3] w-full text-sm font-medium focus:outline-none p-[1.6vh] rounded-md"
+                className="bg-[#F3F3F3] text-black w-full text-sm font-medium focus:outline-none p-[1.6vh] rounded-md"
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
@@ -124,7 +123,7 @@ const Signup = () => {
               <input
                 type="text"
                 placeholder="6+ characters"
-                className="bg-[#F3F3F3] w-full text-sm font-medium focus:outline-none p-[1.6vh] rounded-md"
+                className="bg-[#F3F3F3] text-black w-full text-sm font-medium focus:outline-none p-[1.6vh] rounded-md"
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
@@ -135,7 +134,7 @@ const Signup = () => {
                 Already a member ?{" "}
                 <a
                   className="text-blue-400 cursor-pointer"
-                  onClick={() => navigate("/login")}
+                  onClick={() => navigate("/Login")}
                 >
                   Sign in
                 </a>

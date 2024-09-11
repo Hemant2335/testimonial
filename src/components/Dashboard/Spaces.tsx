@@ -1,32 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CreateSpacePopupAtom } from "../../store/Popup";
 import { useSetRecoilState } from "recoil";
+import SpaceCard from "../TestiCards/SpaceCard";
 
 const Spaces = () => {
   const [Spaces, setSpaces] = useState([]);
   const setCreateSpacePopup = useSetRecoilState(CreateSpacePopupAtom);
-  const fetchSpaces = async () => {
-    const response = await fetch("http://localhost:5000/spaces");
-    const data = await response.json();
-    setSpaces(data);
-  };
+
+  useEffect(() => {
+    const fetchSpaces = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_BACKEND_URL}/api/spaces/GetSpaces`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: localStorage.getItem("token") as string,
+            },
+          }
+        );
+        const data = await res.json();
+        setSpaces(data.spaces);
+      } catch (error) {
+        console.log(error);
+        alert("Internal Server Error");
+      }
+    };
+    fetchSpaces();
+  }, []);
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full relative h-full">
+      <button
+        className="bg-[#F9F6EE] absolute right-0 w-fit text-black p-2 rounded-md"
+        onClick={() => setCreateSpacePopup(true)}
+      >
+        Create Space
+      </button>
       {Spaces.length > 0 ? (
         <div>
-          <button
-            onClick={fetchSpaces}
-            className="bg-blue-500 text-white p-2 rounded-md"
-          >
-            Fetch Spaces
-          </button>
-          <div className="flex flex-wrap gap-5">
+          <div className="flex pt-[8vh] flex-wrap gap-5">
             {Spaces.map((space: any) => (
-              <div key={space.id} className="bg-[#121212] p-5 rounded-lg">
-                <h1 className="text-white text-xl">{space.name}</h1>
-                <p className="text-white">{space.description}</p>
-              </div>
+              <SpaceCard space={space} />
             ))}
           </div>
         </div>
@@ -34,9 +50,9 @@ const Spaces = () => {
         <div className="flex w-full h-full items-center justify-center ">
           <button
             className="bg-[#F9F6EE] w-fit text-black p-2 rounded-md"
-            onClick={()=>setCreateSpacePopup(true)}
+            onClick={() => setCreateSpacePopup(true)}
           >
-            Create Space
+            Nothing To Show
           </button>
         </div>
       )}

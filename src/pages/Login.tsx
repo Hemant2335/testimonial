@@ -59,7 +59,7 @@ const Login = () => {
         <div className="md:w-[60vw]  w-full justify-center  flex-col flex h-[100vh]">
           <div>
             <span className=" gap-2 text-sm font-medium p-4 fixed top-0 right-0 text-left flex float-end">
-              New to OneChat ?{" "}
+              New to SlotIn ?{" "}
               <a
                 className="text-blue-400 cursor-pointer"
                 onClick={() => navigate("/Signup")}
@@ -71,7 +71,7 @@ const Login = () => {
 
           <div className="md:px-[12vw]  flex flex-col   m-[5vh] ">
             <h1 className=" font-black text-[3.5vh] mb-[3vh]">
-              Sign in to OneChat
+              Sign in to SlotIn
             </h1>
             {Warning && (
               <h2 className="text-red-400 font-medium text-[2vh] pt-[2vh] pb-[3vh]">
