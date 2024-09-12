@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { BiHeart, BiChat } from "react-icons/bi";
 import BookAppointment from "../Popups/BookAppointment";
+import { userState } from "../../store/User";
+import { useRecoilValue } from "recoil";
+import ViewAppointment from "../Popups/ViewAppointment";
 
 type Space = {
   space: {
-    id : string;
+    id: string;
     Profession: string;
     ShopName: string;
     ImageUrl: string;
@@ -12,18 +15,28 @@ type Space = {
     City: string;
     Address: string;
     Timing: string;
+    userId: string;
   };
 };
 
 const BookingCard = (space: Space) => {
   const [isBookingCardOpen, setisBookingCardOpen] = useState(false);
-
+  const [isViewAppointmentPopupOpen, setisViewAppointmentPopupOpen] =
+    useState(false);
+  const user = useRecoilValue(userState);
   return (
     <>
       {isBookingCardOpen && (
         <BookAppointment
           isOpen={isBookingCardOpen}
           setIsOpen={setisBookingCardOpen}
+          space={space.space}
+        />
+      )}
+      {isViewAppointmentPopupOpen && (
+        <ViewAppointment
+          isOpen={isViewAppointmentPopupOpen}
+          setIsOpen={setisViewAppointmentPopupOpen}
           space={space.space}
         />
       )}
@@ -76,12 +89,21 @@ const BookingCard = (space: Space) => {
             </p>
           </span>
         </div>
-        <button
-          className="bg-[#F9F6EE]  shadow-5xl  w-full text-gray-700 text-sm  p-2 font-medium rounded-md"
-          onClick={() => setisBookingCardOpen(true)}
-        >
-          Book Appointment
-        </button>
+        {user.id === space.space.userId ? (
+          <button
+            className="bg-[#F9F6EE]  shadow-5xl  w-full text-gray-700 text-sm  p-2 font-medium rounded-md"
+            onClick={() => setisViewAppointmentPopupOpen(true)}
+          >
+            View Appointments
+          </button>
+        ) : (
+          <button
+            className="bg-[#F9F6EE]  shadow-5xl  w-full text-gray-700 text-sm  p-2 font-medium rounded-md"
+            onClick={() => setisBookingCardOpen(true)}
+          >
+            Book Appointment
+          </button>
+        )}
       </div>
     </>
   );

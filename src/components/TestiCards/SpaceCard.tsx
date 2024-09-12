@@ -1,7 +1,10 @@
+import { useEffect, useState } from "react";
 import { BiHeart, BiChat } from "react-icons/bi";
+import ViewAppointment from "../Popups/ViewAppointment";
 
 type Space = {
   space: {
+    id : string;
     Profession: string;
     ShopName: string;
     ImageUrl: string;
@@ -13,8 +16,20 @@ type Space = {
 };
 
 const SpaceCard = (space: Space) => {
+
+
+  const [isViewAppointmentPopupOpen, setisViewAppointmentPopupOpen] = useState(false)
+
   return (
-    <div className="w-[20vw] flex flex-col gap-3 h-fit shadow-4xl bg-[#1a1a1a] rounded-lg p-3">
+    <>
+    {isViewAppointmentPopupOpen && (
+        <ViewAppointment
+          isOpen={isViewAppointmentPopupOpen}
+          setIsOpen={setisViewAppointmentPopupOpen}
+          space={space.space}
+        />
+      )}
+      <div className="w-[20vw] flex flex-col gap-3 h-fit shadow-4xl bg-[#1a1a1a] rounded-lg p-3">
       <div className="flex w-full justify-between px-2 items-center gap-2">
         <div className="flex w-full items-center gap-2">
           <div className="w-[3vw] h-[3vw] bg-white rounded-[50%]">
@@ -78,11 +93,13 @@ const SpaceCard = (space: Space) => {
       </div>
       <button
         className="bg-[#F9F6EE] shadow-5xl  w-full text-gray-700 text-sm  p-2 font-medium rounded-md"
-        // onClick={handleSubmit}
+        onClick={()=>setisViewAppointmentPopupOpen(true)}
       >
         View Appointments
       </button>
     </div>
+    </>
+    
   );
 };
 
