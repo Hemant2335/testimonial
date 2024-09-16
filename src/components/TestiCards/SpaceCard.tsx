@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import { BiHeart, BiChat } from "react-icons/bi";
+import {  useState } from "react";
+import { BiHeart, BiChat,  BiQrScan } from "react-icons/bi";
 import ViewAppointment from "../Popups/ViewAppointment";
+import QrPopup from "../Popups/QrPopup";
 
 type Space = {
   space: {
@@ -17,6 +18,7 @@ type Space = {
 
 const SpaceCard = (space: Space) => {
 
+  const [IsQrScanOpen, setIsQrScanOpen] = useState(false);
 
   const [isViewAppointmentPopupOpen, setisViewAppointmentPopupOpen] = useState(false)
 
@@ -29,10 +31,17 @@ const SpaceCard = (space: Space) => {
           space={space.space}
         />
       )}
-      <div className="w-[20vw] flex flex-col gap-3 h-fit shadow-4xl bg-[#1a1a1a] rounded-lg p-3">
+      {IsQrScanOpen && (
+        <QrPopup
+          isOpen={IsQrScanOpen}
+          setIsOpen={setIsQrScanOpen}
+          space={space.space}
+        />
+      )}
+      <div className="md:w-[20vw] flex flex-col gap-3 h-fit shadow-4xl bg-[#1a1a1a] rounded-lg p-3">
       <div className="flex w-full justify-between px-2 items-center gap-2">
         <div className="flex w-full items-center gap-2">
-          <div className="w-[3vw] h-[3vw] bg-white rounded-[50%]">
+          <div className="md:w-[3vw] w-[5vh] h-[5vh] md:h-[3vw] bg-white rounded-[50%]">
             <img
               src={space.space.ImageUrl}
               alt="avatar"
@@ -49,6 +58,7 @@ const SpaceCard = (space: Space) => {
         <div className="flex gap-2">
           <BiChat className="text-[3vh]" />
           <BiHeart className="text-[3vh]" />
+          <BiQrScan className="text-[3vh] cursor-pointer" onClick={()=>setIsQrScanOpen(true)}/>
         </div>
       </div>
       <div className="w-full flex gap-2 py-3">

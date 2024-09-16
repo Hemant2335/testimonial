@@ -31,6 +31,7 @@ const BookingCard = (space: Space) => {
           isOpen={isBookingCardOpen}
           setIsOpen={setisBookingCardOpen}
           space={space.space}
+          isOffline = {false}
         />
       )}
       {isViewAppointmentPopupOpen && (
@@ -40,10 +41,10 @@ const BookingCard = (space: Space) => {
           space={space.space}
         />
       )}
-      <div className="w-[20vw] flex flex-col gap-3 h-fit shadow-4xl bg-[#1E201E] rounded-lg p-3">
+      <div className="md:w-[20vw] flex flex-col gap-3 h-fit shadow-4xl bg-[#1E201E] rounded-lg p-3">
         <div className="flex w-full justify-between px-2 items-center gap-2">
           <div className="flex w-full items-center gap-2">
-            <div className="w-[3vw] h-[3vw] bg-white rounded-[50%]">
+            <div className="md:w-[3vw] w-[5vh] h-[5vh] md:h-[3vw] bg-white rounded-[50%]">
               <img
                 src={space.space.ImageUrl}
                 alt="avatar"
@@ -97,12 +98,20 @@ const BookingCard = (space: Space) => {
             View Appointments
           </button>
         ) : (
-          <button
-            className="bg-[#F9F6EE]  shadow-5xl  w-full text-gray-700 text-sm  p-2 font-medium rounded-md"
-            onClick={() => setisBookingCardOpen(true)}
-          >
-            Book Appointment
-          </button>
+          <div className="w-full flex gap-2">
+            <button
+              className="bg-[#F9F6EE] whitespace-nowrap  shadow-5xl  w-full text-gray-700 text-sm px-1  py-2 font-medium rounded-md"
+              onClick={() => setisBookingCardOpen(true)}
+            >
+              Book Appointment
+            </button>
+            {/* <button
+              className="bg-blue-400 whitespace-nowrap  shadow-5xl  w-full  text-sm px-1 py-2 font-medium rounded-md"
+              onClick={() => setisViewAppointmentPopupOpen(true)}
+            >
+              View Appointments
+            </button> */}
+          </div>
         )}
       </div>
     </>

@@ -1,4 +1,4 @@
-import React from "react";
+
 import { BiChat } from "react-icons/bi";
 import { FiClock, FiHeart, FiMapPin, FiTrash } from "react-icons/fi";
 
@@ -21,12 +21,12 @@ type AppointmentCardProps = {
 const AppointmentCard = (props: AppointmentCardProps) => {
   const { appointment } = props;
   return (
-    <div className="w-[20vw] flex flex-col gap-3 h-fit shadow-4xl bg-[#1E201E] rounded-lg p-3">
+    <div className="md:w-[20vw] flex flex-col gap-3 h-fit shadow-4xl bg-[#1E201E] rounded-lg p-3">
       {/* Header */}
       <div className="flex w-full justify-between px-2 items-center gap-2">
         <div className="flex w-full items-center gap-2 ">
           {/* Shop Image */}
-          <div className="w-[3vw] h-[3vw] bg-white rounded-[50%]">
+          <div className="md:w-[3vw] w-[5vh] h-[5vh] md:h-[3vw] bg-white rounded-[50%]">
             <img
               src={appointment.space.ImageUrl}
               alt="avatar"

@@ -48,7 +48,7 @@ const Login = () => {
   return (
     <>
       {/* <Loading /> */}
-      <div className="flex absolute z-10 top-0 ">
+      <div className="flex  z-10 top-0 ">
         <div className="md:flex hidden cursor-pointer  text-[3vh] w-[40vw] h-screen font-bold ">
           <img
             src={banner}

@@ -19,3 +19,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* Hide the scrollbar for Chrome, Safari, and Edge */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide the scrollbar for Firefox */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+

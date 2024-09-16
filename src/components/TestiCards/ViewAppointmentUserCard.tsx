@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 
 type ViewAppointmentProps = {
   user: {
@@ -8,7 +7,7 @@ type ViewAppointmentProps = {
 };
 
 const ViewAppointmentUserCard = (props: ViewAppointmentProps) => {
-  return <div>ViewAppointmentUserCard</div>;
+  return <div>ViewAppointmentUserCard {props.user.name}</div>;
 };
 
 export default ViewAppointmentUserCard;

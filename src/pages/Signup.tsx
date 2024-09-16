@@ -51,7 +51,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="flex absolute top-0">
+    <div className="flex  top-0">
       <div className="md:flex hidden cursor-pointer  text-[3vh] w-[40vw] h-screen font-bold ">
         <img src={banner} className=" object-cover w-full h-full" alt="logo" />
       </div>
@@ -78,7 +78,7 @@ const Signup = () => {
                   }}
                 />
               </div>
-              <div className="flex w-full flex-col gap-2 px-5">
+              <div className="flex w-full flex-col gap-2 ">
                 <label htmlFor="profession" className="font-medium ">
                   Type
                 </label>

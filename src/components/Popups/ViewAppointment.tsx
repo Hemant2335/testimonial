@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { FiX } from "react-icons/fi";
-import ViewAppointmentUserCard from "../TestiCards/ViewAppointmentUserCard";
 
 type ViewAppointmentProps = {
   isOpen: boolean;
@@ -18,7 +17,6 @@ type ViewAppointmentProps = {
 };
 
 const ViewAppointment = (props: ViewAppointmentProps) => {
-  const [Slots, setSlots] = useState<String[]>([]);
 
   const FindSpaceAppointments = async () => {
     try {
@@ -49,10 +47,6 @@ const ViewAppointment = (props: ViewAppointmentProps) => {
     FindSpaceAppointments();
   }, []);
 
-  const timeToMinutes = (time: any) => {
-    const [hours, minutes] = time.split(":").map(Number);
-    return hours * 60 + minutes;
-  };
 
   const AddToTimeline = (slot: any) => {
     if (props.space) {
@@ -147,7 +141,7 @@ const ViewAppointment = (props: ViewAppointmentProps) => {
             onClick={() => props.setIsOpen(false)}
           />
         </h1>
-        <div className="flex w-full h-full gap-2 overflow-y-auto">
+        <div className="flex w-full h-full gap-2 overflow-y-auto no-scrollbar ">
           <div
             id="TimeLineTime"
             className="w-[20vw]  flex flex-col gap-5 h-full  rounded-md p-3"

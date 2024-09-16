@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
-import { times } from "../Popups/CreateSpace";
+import { useNavigate } from "react-router-dom";
 
 type BookAppointmentProps = {
   isOpen: boolean;
@@ -15,9 +15,15 @@ type BookAppointmentProps = {
     Address: string;
     Timing: string;
   };
+  MobileNumber?: string;
+  Name?: string;
+  isOffline: boolean;
 };
 
 const BookAppointment = (props: BookAppointmentProps) => {
+
+  const navigate = useNavigate();
+
   const handleBookAppointment = async () => {
     try {
       console.log(props.space);
@@ -40,6 +46,39 @@ const BookAppointment = (props: BookAppointmentProps) => {
       if (!data.Status) {
         return alert("Something went wrong");
       }
+      props.setIsOpen(false);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+
+  const handleBookOfflineAppointments = async () => {
+    try {
+      console.log(props.space);
+      const res = await fetch(
+        `${
+          import.meta.env.VITE_BACKEND_URL
+        }/api/explore/BookOfflineAppointment`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: localStorage.getItem("token") as string,
+          },
+          body: JSON.stringify({
+            SpaceId: props.space.id,
+            Time: Time,
+            MobileNumber: props.MobileNumber,
+            Name: props.Name,
+          }),
+        }
+      );
+
+      const data = await res.json();
+      if (!data.Status) {
+        return alert("Something went wrong");
+      }
+      navigate("/Explore");
       props.setIsOpen(false);
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -85,9 +124,9 @@ const BookAppointment = (props: BookAppointmentProps) => {
 
   return (
     <div className="fixed flex h-[100vh] p-5 gap-2 w-screen top-0 left-0 justify-center items-center z-10 bg-[rgba(34,34,34,0.5)]">
-      <div className="flex  w-[35vw] shadow-4xl flex-col gap-4 h-fit rounded-lg bg-[#1a1a1a] ">
+      <div className="flex  md:w-[35vw] shadow-4xl flex-col gap-4 h-fit rounded-lg bg-[#1a1a1a] ">
         <h1 className="text-left flex text-gray-300  w-full justify-between  items-center gap-4 text-2xl font-semibold pt-5 px-5">
-          <span className="flex gap-1 items-center">
+          <span className="md:flex gap-1 items-center">
             Book Appointment for{" "}
             <p className="text-[#EA4B8A]">{props.space.ShopName}</p>
           </span>
@@ -134,7 +173,9 @@ const BookAppointment = (props: BookAppointmentProps) => {
             </div>
           ) : (
             <div className="flex font-semibold items-center justify-center my-2 gap-2 w-full mt-2 mb-3">
-              <span className="bg-red-400  p-2  rounded-lg">Shop is Closed</span>
+              <span className="bg-red-400  p-2  rounded-lg">
+                Shop is Closed
+              </span>
             </div>
           )}
         </div>
@@ -142,7 +183,7 @@ const BookAppointment = (props: BookAppointmentProps) => {
           <div className="w-full p-3">
             <button
               className="bg-[#EA4B8A]  w-full p-2 font-semibold rounded-md"
-              onClick={handleBookAppointment}
+              onClick={!props.isOffline ? handleBookAppointment : handleBookOfflineAppointments}
             >
               Book
             </button>

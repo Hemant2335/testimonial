@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import AppointmentCard from "../TestiCards/AppointmentCard";
 
 const Appointments = () => {
@@ -33,12 +33,14 @@ const Appointments = () => {
   }, []);
 
   return (
-    <div className="w-full relative h-full">
-      <div className="flex items-center justify-between">
-        <h1 className="mt-3 text-xl font-bold">
-          {IsActive ? "Upcoming" : "Previous"} Appointments
+    <div className="w-full relative h-[50vh]  md:h-full overflow-y-auto no-scrollbar ">
+      <div className="flex items-center justify-between ">
+        <h1 className="mt-3 md:text-xl md:flex-row md:gap-2 flex flex-col  font-bold ">
+          {IsActive ? "Upcoming" : "Previous"} 
+          <span>Appointments</span>
         </h1>
-        <div className="flex gap-2">
+
+        <div className="flex md:flex-row flex-col gap-2">
           <button
             onClick={() => setIsActive(true)}
             className={`${
@@ -64,7 +66,7 @@ const Appointments = () => {
           </button>
         </div>
       ) : IsActive ? (
-        <div className="flex  flex-wrap gap-2 mt-5">
+        <div className="md:flex  w-full flex-wrap gap-2 mt-5">
           {Appointments.map(
             (appointment: any) =>
               appointment.status === "ACTIVE" && (
@@ -73,7 +75,7 @@ const Appointments = () => {
           )}
         </div>
       ) : (
-        <div className="flex  flex-wrap gap-2 mt-5">
+        <div className="md:flex-row flex flex-col w-full md:flex-wrap gap-2 mt-5">
           {Appointments.map((appointment: any) => (
              appointment.status === "EXPIRED" && (
               <AppointmentCard appointment={appointment} />

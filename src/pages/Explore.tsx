@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import BookingCard from "../components/TestiCards/BookingCards";
 
 const Explore = () => {
@@ -50,7 +50,7 @@ const Explore = () => {
     <div className="mt-5 p-[2vw]">
       <h1 className="text-3xl font-semibold">Explore Services</h1>
       <div></div>
-      <div className="mt-[5vh]  gap-5 flex flex-wrap">
+      <div className="mt-[5vh]  gap-5 md:flex-row flex flex-col flex-wrap">
         {Booking.map((space: any) => (
           <BookingCard space={space} />
         ))}

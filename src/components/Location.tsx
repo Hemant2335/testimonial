@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useGeolocated } from "react-geolocated";
 
 const LocationForm = () => {
@@ -10,9 +9,10 @@ const LocationForm = () => {
     },
     userDecisionTimeout: 5000,
   });
+  console.log(coords);
 
   return (
-    
+    <div> </div>
   );
 };
 

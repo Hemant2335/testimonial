@@ -31,7 +31,7 @@ const Spaces = () => {
   }, []);
 
   return (
-    <div className="w-full relative h-full">
+    <div className="w-full overflow-y-auto no-scrollbar  relative h-full">
       <button
         className="bg-[#F9F6EE] absolute right-0 w-fit text-black p-2 rounded-md"
         onClick={() => setCreateSpacePopup(true)}
@@ -40,7 +40,7 @@ const Spaces = () => {
       </button>
       {Spaces.length > 0 ? (
         <div>
-          <div className="flex pt-[8vh] flex-wrap gap-5">
+          <div className="md:flex pt-[8vh] flex-wrap gap-5">
             {Spaces.map((space: any) => (
               <SpaceCard space={space} />
             ))}

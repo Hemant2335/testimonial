@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Explore from "./pages/Explore";
+import OfflineAppointment from "./pages/OfflineAppointment";
 import { useRecoilState } from "recoil";
 import { userState } from "./store/User";
 import "./index.css";
@@ -49,6 +50,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
+      <div className="no-scrollbar overflow-y-auto min-h-screen ">
         <Navbar />
         <Routes>
           <Route path="/" element={<Homepage />} />
@@ -56,8 +58,10 @@ function App() {
           <Route path="/Login" element={<Login />} />
           <Route path="/Signup" element={<Signup />} />
           <Route path="/Explore" element={<Explore/>} />
+          <Route path="/OfflineAppointment/:spaceId" element={<OfflineAppointment/>} />
         </Routes>
         <Footer />
+        </div>
       </BrowserRouter>
     </>
   );
