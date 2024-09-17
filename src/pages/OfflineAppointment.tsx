@@ -11,6 +11,12 @@ const OfflineAppointment = () => {
   const [Space, setSpace] = useState(null);
   const navigate = useNavigate();
 
+  useEffect(()=>{
+    if(localStorage.getItem("user") !== null){
+      navigate("/Explore");
+    }
+  },[])
+
   const fetchSpaceDetails = async () => {
     const spaceId = window.location.pathname.split("/")[2];
     if (!spaceId) return;

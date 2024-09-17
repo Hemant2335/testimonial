@@ -15,8 +15,7 @@ type QRProps = {
       Timing: string;
     };
   };
-
-
+  
 const QrPopup = (props : QRProps ) => {
   return (
     <div className="fixed flex h-[100vh] p-5 gap-2 w-screen top-0 left-0 justify-center items-center z-10 bg-[rgba(34,34,34,0.5)]">
@@ -30,7 +29,7 @@ const QrPopup = (props : QRProps ) => {
         </h1>
         <div className="w-full h-full flex items-center justify-center p-5 " >
                 <div className="bg-[#121212] shadow-4xl rounded-lg w-fit h-fit p-3">
-                <QRCode value={props.space.id} />
+                <QRCode value={`https://slot-lac.vercel.app/offlineAppointment/${props.space.id}` } size={258} style={{ margin: '20px' }}/>
                 </div>
         </div>
       </div>
