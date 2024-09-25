@@ -69,20 +69,20 @@ const CreateSpace = () => {
   const handleImageUpload = async (imageFile: File | null) => {
     if (!imageFile) return;
     const formDataImage = new FormData();
-    formDataImage.append("file", imageFile);
-    formDataImage.append("upload_preset", "ml_default");
-    formDataImage.append("cloud_name", "dri5u2nqb");
+    formDataImage.append("image", imageFile);
 
     setFormData((prevData) => ({ ...prevData, uploading: true }));
 
     try {
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dri5u2nqb/image/upload",
-        formDataImage
-      );
+      const response = await axios.post("http://localhost:3000/api/upload", formDataImage, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Required for file uploads
+          authorization: localStorage.getItem("token") as string,
+        },
+      });
       setFormData((prevData) => ({
         ...prevData,
-        imageUrl: response.data.secure_url,
+        imageUrl: response.data.secure_url.split("?")[0],
         uploading: false,
       }));
     } catch (error) {

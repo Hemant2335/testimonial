@@ -11,6 +11,8 @@ import { useRecoilState } from "recoil";
 import { userState } from "./store/User";
 import "./index.css";
 import { useEffect } from "react";
+import { WebSocketProvider } from "./contexts/WebSocketProvider";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const [User, setUser] = useRecoilState(userState);
@@ -50,18 +52,24 @@ function App() {
   return (
     <>
       <BrowserRouter>
-      <div className="no-scrollbar overflow-y-auto min-h-screen ">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/Login" element={<Login />} />
-          <Route path="/Signup" element={<Signup />} />
-          <Route path="/Explore" element={<Explore/>} />
-          <Route path="/OfflineAppointment/:spaceId" element={<OfflineAppointment/>} />
-        </Routes>
-        <Footer />
-        </div>
+        <WebSocketProvider>
+          <div className="no-scrollbar overflow-y-auto min-h-screen ">
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/Login" element={<Login />} />
+              <Route path="/Signup" element={<Signup />} />
+              <Route path="/Explore" element={<Explore />} />
+              <Route
+                path="/OfflineAppointment/:spaceId"
+                element={<OfflineAppointment />}
+              />
+            </Routes>
+            <Footer />
+            <Toaster />
+          </div>
+        </WebSocketProvider>
       </BrowserRouter>
     </>
   );

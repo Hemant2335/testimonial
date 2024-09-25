@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FiX } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
@@ -21,12 +22,12 @@ type BookAppointmentProps = {
 };
 
 const BookAppointment = (props: BookAppointmentProps) => {
-
   const navigate = useNavigate();
 
   const handleBookAppointment = async () => {
     try {
       console.log(props.space);
+      const toastId = toast.loading("Booking Appointment");
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/explore/BookAppointment`,
         {
@@ -41,10 +42,12 @@ const BookAppointment = (props: BookAppointmentProps) => {
           }),
         }
       );
-
       const data = await res.json();
+      toast.dismiss(toastId);
       if (!data.Status) {
-        return alert("Something went wrong");
+        return toast(data.error);
+      } else {
+        toast.success("Appointment Queued Successfully");
       }
       props.setIsOpen(false);
     } catch (error) {
@@ -183,7 +186,11 @@ const BookAppointment = (props: BookAppointmentProps) => {
           <div className="w-full p-3">
             <button
               className="bg-[#EA4B8A]  w-full p-2 font-semibold rounded-md"
-              onClick={!props.isOffline ? handleBookAppointment : handleBookOfflineAppointments}
+              onClick={
+                !props.isOffline
+                  ? handleBookAppointment
+                  : handleBookOfflineAppointments
+              }
             >
               Book
             </button>
