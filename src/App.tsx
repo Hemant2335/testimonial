@@ -10,15 +10,18 @@ import OfflineAppointment from "./pages/OfflineAppointment";
 import { useRecoilState } from "recoil";
 import { userState } from "./store/User";
 import "./index.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { WebSocketProvider } from "./contexts/WebSocketProvider";
 import { Toaster } from "react-hot-toast";
+import Loading from "./components/Loading";
 
 function App() {
   const [User, setUser] = useRecoilState(userState);
+  const [IsLoading , setisLoading] = useState(false);
 
   const getUser = async (token: string) => {
     try {
+      setisLoading(true);
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/auth/getuser`,
         {
@@ -36,6 +39,7 @@ function App() {
           window.location.href = "/Login";
       }
       setUser(data.user);
+      setisLoading(false);
     } catch (error) {
       alert("Internal Server Error");
       if (!useLocation().pathname.includes("/Login"))
@@ -54,6 +58,7 @@ function App() {
       <BrowserRouter>
         <WebSocketProvider>
           <div className="no-scrollbar overflow-y-auto min-h-screen ">
+            {IsLoading && <Loading /> }
             <Navbar />
             <Routes>
               <Route path="/" element={<Homepage />} />
