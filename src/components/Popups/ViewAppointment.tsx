@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { FiX } from "react-icons/fi";
+import { LoadingAtom } from "../../store/Popup";
+import { useRecoilState } from "recoil";
 
 type ViewAppointmentProps = {
   isOpen: boolean;
@@ -17,8 +19,10 @@ type ViewAppointmentProps = {
 };
 
 const ViewAppointment = (props: ViewAppointmentProps) => {
+  const [isLoading , setIsLoading] = useRecoilState(LoadingAtom);
   const FindSpaceAppointments = async () => {
     try {
+      setIsLoading(true);
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/spaces/GetSpaceAppointments`,
         {
@@ -33,6 +37,7 @@ const ViewAppointment = (props: ViewAppointmentProps) => {
         }
       );
       const data = await res.json();
+      setIsLoading(false);
       if (!data.Status) {
         return alert("Something went wrong");
       }

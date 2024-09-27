@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FiX } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { LoadingAtom } from "../../store/Popup";
+import { set } from "@cloudinary/url-gen/actions/variable";
 
 type BookAppointmentProps = {
   isOpen: boolean;
@@ -23,10 +26,12 @@ type BookAppointmentProps = {
 
 const BookAppointment = (props: BookAppointmentProps) => {
   const navigate = useNavigate();
+  const [isLoading , setIsLoading] = useRecoilState(LoadingAtom);
 
   const handleBookAppointment = async () => {
     try {
       console.log(props.space);
+      setIsLoading(true);
       const toastId = toast.loading("Booking Appointment");
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/explore/BookAppointment`,
@@ -43,6 +48,7 @@ const BookAppointment = (props: BookAppointmentProps) => {
         }
       );
       const data = await res.json();
+      setIsLoading(false);
       toast.dismiss(toastId);
       if (!data.Status) {
         return toast(data.error);
@@ -58,6 +64,7 @@ const BookAppointment = (props: BookAppointmentProps) => {
   const handleBookOfflineAppointments = async () => {
     try {
       console.log(props.space);
+      setIsLoading(true);
       const res = await fetch(
         `${
           import.meta.env.VITE_BACKEND_URL
@@ -78,6 +85,7 @@ const BookAppointment = (props: BookAppointmentProps) => {
       );
 
       const data = await res.json();
+      setIsLoading(false);
       if (!data.Status) {
         return alert("Something went wrong");
       }
@@ -95,7 +103,7 @@ const BookAppointment = (props: BookAppointmentProps) => {
     try {
       const TimeFrom = parseInt(props.space.Timing.split("-")[0].split(":")[0]);
       const TimeTo = parseInt(props.space.Timing.split("-")[1].split(":")[0]);
-
+      setIsLoading(true);
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/explore/FindAvailableSlots`,
         {
@@ -112,6 +120,7 @@ const BookAppointment = (props: BookAppointmentProps) => {
         }
       );
       const data = await res.json();
+      setIsLoading(false);
       if (!data.Status) {
         return alert("Something went wrong");
       }

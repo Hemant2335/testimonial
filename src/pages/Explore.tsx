@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import BookingCard from "../components/TestiCards/BookingCards";
+import { LoadingAtom } from "../store/Popup";
+import { useRecoilState } from "recoil";
+import { set } from "@cloudinary/url-gen/actions/variable";
 
 const Explore = () => {
   const [Booking, setBooking] = useState([]);
-
+  const [isLoading , setIsLoading] = useRecoilState(LoadingAtom);
   useEffect(() => {
     const fetchBookings = async () => {
       try {
+        setIsLoading(true);
         const res = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/spaces/GetAllSpaces`,
           {
@@ -18,6 +22,7 @@ const Explore = () => {
           }
         );
         const data = await res.json();
+        setIsLoading(false);
         setBooking(data.spaces);
       } catch (error) {
         console.log(error);

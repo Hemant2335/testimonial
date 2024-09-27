@@ -7,16 +7,18 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Explore from "./pages/Explore";
 import OfflineAppointment from "./pages/OfflineAppointment";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { userState } from "./store/User";
 import "./index.css";
 import { useEffect } from "react";
 import { WebSocketProvider } from "./contexts/WebSocketProvider";
 import { Toaster } from "react-hot-toast";
+import { LoadingAtom } from "./store/Popup";
+import Loading from "./components/Loading";
 
 function App() {
   const [User, setUser] = useRecoilState(userState);
-
+  const isLoading  = useRecoilValue(LoadingAtom);
   const getUser = async (token: string) => {
     try {
       const res = await fetch(
@@ -54,6 +56,7 @@ function App() {
       <BrowserRouter>
         <WebSocketProvider>
           <div className="no-scrollbar overflow-y-auto min-h-screen ">
+            {isLoading && (<Loading />)}
             <Navbar />
             <Routes>
               <Route path="/" element={<Homepage />} />

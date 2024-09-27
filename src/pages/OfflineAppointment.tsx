@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import BookAppointment from "../components/Popups/BookAppointment";
 import { useNavigate } from "react-router-dom";
 import { FiMeh } from "react-icons/fi";
+import { useRecoilState } from "recoil";
+import { LoadingAtom } from "../store/Popup";
+import { set } from "@cloudinary/url-gen/actions/variable";
 
 const OfflineAppointment = () => {
   const [isBookingCardOpen, setisBookingCardOpen] = useState(false);
@@ -10,6 +13,7 @@ const OfflineAppointment = () => {
   const [Name, setName] = useState("");
   const [Space, setSpace] = useState(null);
   const navigate = useNavigate();
+  const [isLoading , setIsLoading] = useRecoilState(LoadingAtom);
 
   useEffect(()=>{
     if(localStorage.getItem("user") !== null){
@@ -21,6 +25,7 @@ const OfflineAppointment = () => {
     const spaceId = window.location.pathname.split("/")[2];
     if (!spaceId) return;
     try {
+      setIsLoading(true);
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/spaces/GetSpaceDetails`,
         {
@@ -35,6 +40,7 @@ const OfflineAppointment = () => {
       );
 
       const data = await res.json();
+      setIsLoading(false);
       if (!data.Status) {
         return alert("Something went wrong");
       }

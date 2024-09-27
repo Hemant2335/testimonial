@@ -1,6 +1,6 @@
 import { FiX, FiLoader, FiCheck } from "react-icons/fi";
-import { CreateSpacePopupAtom } from "../../store/Popup";
-import { useSetRecoilState } from "recoil";
+import { CreateSpacePopupAtom, LoadingAtom } from "../../store/Popup";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useState } from "react";
 import axios from "axios";
 import Avatar from "../../assets/avatar.jpg";
@@ -39,6 +39,7 @@ const CreateSpace = () => {
   });
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState("Barber");
+  const [isLoading , setIsLoading] = useRecoilState(LoadingAtom);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -74,12 +75,14 @@ const CreateSpace = () => {
     setFormData((prevData) => ({ ...prevData, uploading: true }));
 
     try {
+      setIsLoading(true);
       const response = await axios.post("http://localhost:3000/api/upload", formDataImage, {
         headers: {
           "Content-Type": "multipart/form-data", // Required for file uploads
           authorization: localStorage.getItem("token") as string,
         },
       });
+      setIsLoading(false);
       setFormData((prevData) => ({
         ...prevData,
         imageUrl: response.data.secure_url.split("?")[0],
@@ -93,6 +96,7 @@ const CreateSpace = () => {
 
   const handleSubmit = async () => {
     try {
+      setIsLoading(true);
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/spaces/CreateSpace`,
         {
@@ -114,6 +118,7 @@ const CreateSpace = () => {
       );
 
       const data = await res.json();
+      setIsLoading(false);
       if (!data.Status) {
         return alert("Something went wrong");
       }

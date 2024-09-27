@@ -1,12 +1,16 @@
 import  { useEffect, useState } from "react";
 import AppointmentCard from "../TestiCards/AppointmentCard";
+import { useRecoilState } from "recoil";
+import { LoadingAtom } from "../../store/Popup";
 
 const Appointments = () => {
   const [Appointments, setAppointments] = useState([]);
   const [IsActive, setIsActive] = useState(true);
+  const [isLoading , setIsLoading] = useRecoilState(LoadingAtom);
 
   const FetchAppointments = async () => {
     try {
+      setIsLoading(true);
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/explore/GetUserAppointments`,
         {
@@ -19,6 +23,7 @@ const Appointments = () => {
       );
 
       const data = await res.json();
+      setIsLoading(false);
       setAppointments(data.appointments);
       if (!data.Status) {
         return alert("Something went wrong");
@@ -70,7 +75,7 @@ const Appointments = () => {
           {Appointments.map(
             (appointment: any) =>
               appointment.status === "ACTIVE" && (
-                <AppointmentCard appointment={appointment} />
+                <AppointmentCard appointment={appointment} /> 
               )
           )}
         </div>

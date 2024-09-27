@@ -1,6 +1,8 @@
 import { useState } from "react";
 import banner from "../assets/banner.jpg";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { LoadingAtom } from "../store/Popup";
 
 const Signup = () => {
   const [Name, setName] = useState<string | null>(null);
@@ -8,6 +10,7 @@ const Signup = () => {
   const [Password, setPassword] = useState<string | null>(null);
   const [Warning, setWarning] = useState<string | null>(null);
   const navigate = useNavigate();
+  const [isLoading , setIsLoading] = useRecoilState(LoadingAtom);
 
   const handleSignup = async () => {
     if (!Name || !selectedValue || !Email || !Password ) {
@@ -16,6 +19,7 @@ const Signup = () => {
       return;
     }
     try {
+      setIsLoading(true);
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/auth/register`,
         {
@@ -32,6 +36,7 @@ const Signup = () => {
         }
       );
       const data = await res.json();
+      setIsLoading(false);
       if (data.Status === false) {
         setWarning(data.error);
         return;

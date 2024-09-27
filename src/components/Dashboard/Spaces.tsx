@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
-import { CreateSpacePopupAtom } from "../../store/Popup";
-import { useSetRecoilState } from "recoil";
+import { CreateSpacePopupAtom, LoadingAtom } from "../../store/Popup";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import SpaceCard from "../TestiCards/SpaceCard";
 
 const Spaces = () => {
   const [Spaces, setSpaces] = useState([]);
   const setCreateSpacePopup = useSetRecoilState(CreateSpacePopupAtom);
+  const [isLoading , setIsLoading] = useRecoilState(LoadingAtom);
 
   useEffect(() => {
     const fetchSpaces = async () => {
       try {
+        setIsLoading(true);
         const res = await fetch(
           `${import.meta.env.VITE_BACKEND_URL}/api/spaces/GetSpaces`,
           {
@@ -21,6 +23,7 @@ const Spaces = () => {
           }
         );
         const data = await res.json();
+        setIsLoading(false);
         setSpaces(data.spaces);
       } catch (error) {
         console.log(error);

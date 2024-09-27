@@ -2,16 +2,21 @@ import { useState } from "react";
 import banner from "../assets/banner.jpg";
 import { useNavigate } from "react-router-dom";
 import { userState } from "../store/User";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { LoadingAtom } from "../store/Popup";
 
 const Login = () => {
   const [Email, setEmail] = useState<string | null>(null);
   const setUserState = useSetRecoilState(userState);
   const [Password, setPassword] = useState<string | null>(null);
   const [Warning, setWarning] = useState<string | null>(null);
+  const [isLoading , setIsLoading] = useRecoilState(LoadingAtom);
+
+
   const navigate = useNavigate();
   const handlelogin = async () => {
     try {
+      setIsLoading(true);
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/api/auth/login`,
         {
@@ -25,8 +30,9 @@ const Login = () => {
           }),
         }
       );
-
+      
       const data = await res.json();
+      setIsLoading(false);
       console.log(data);
       if (!data) {
         return setWarning("Something Went Wrong");
